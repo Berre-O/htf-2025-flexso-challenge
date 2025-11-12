@@ -31,7 +31,9 @@ export = (srv: cds.Service) => {
     return handlerMaterial.replaceInstallation(req);
   });
 
-  srv.before("READ", "CameraImages", req => handlerCamera.checkCameraAvailability(req));
+  srv.before("READ", "CameraImages", (req) =>
+    handlerCamera.checkCameraAvailability(req)
+  );
 
   srv.on("checkCameraAvailability", async (req) => {
     return handlerCamera.areAllCamerasAvailable(req);
@@ -40,5 +42,5 @@ export = (srv: cds.Service) => {
   srv.on("getCamerarecordingIdForLocation", async (req) => {
     return handlerCamera.getCamerarecordingIdForLocation(req);
   });
-
+  
 };

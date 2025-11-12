@@ -12,9 +12,17 @@
                         <Label id="_IDGenLabel2" text="Icon" />
                         <Input id="_IDGenInput1" required="true" value="{create>/symbol}" />
                         <Label id="_IDGenLabel3" text="Where abouts" />
-                        <Input id="_IDGenInput2" required="true" value="{create>/whereFound}" />
-                        <Label id="_IDGenLabel4" text="Language" />
-                        <Input id="_IDGenInput3" required="true" value="{create>/language}" />
+                        <Select id="_IDGenSelectWhereAbouts" required="true" selectedKey="{create>/whereFound}" items="{/SubnauticLocation}">
+                            <core:Item key="{name}" text="{name}" />
+                        </Select>
+                        <Label text="Language" />
+                        <Select id="_IDGenSelectLanguage"
+                                required="true"
+                                selectedKey="{create>/language}"
+                                items="{/Languages}">
+                            <core:Item key="{language}" text="{language}" />
+                        </Select>
+
                     </f:content>
                 </f:SimpleForm>
             </VBox>

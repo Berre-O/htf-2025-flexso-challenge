@@ -14,14 +14,14 @@ import ODataListBinding from "sap/ui/model/odata/v4/ODataListBinding";
  * @namespace flexso.cap.htf.symboltranslation.controller
  */
 export default class Master extends Controller {
-  creationDialog: Dialog;
-  table: Table;
-  /*eslint-disable @typescript-eslint/no-empty-function*/
+  creationDialog!: Dialog;
+  table!: Table;
+
   public onInit(): void {
     this.table = this.byId("idProductsTable") as Table;
   }
 
-  async addIcon() {
+  public async addIcon(): Promise<void> {
     const createModel = new JSONModel({
       symbol: "",
       whereFound: "",
@@ -29,47 +29,44 @@ export default class Master extends Controller {
     });
 
     if (!this.creationDialog) {
-      this.creationDialog ??= (await Fragment.load({
+      this.creationDialog = (await Fragment.load({
         name: "flexso.cap.htf.symboltranslation.view.fragments.create",
         controller: this,
       })) as Dialog;
-
       this.getView()?.addDependent(this.creationDialog);
     }
 
+    // Set only the create model; the Select items bind directly to OData via {/SubnauticLocation} and {/Languages}
     this.creationDialog.setModel(createModel, "create");
 
     this.creationDialog.open();
   }
 
-  save() {
-    //This is save logic for creating a new Symbol
+  public save(): void {
     const listBinding = this.getView()
       ?.getModel()
       ?.bindList("/Symbols") as ODataListBinding;
-
     const data = this.creationDialog.getModel("create");
 
     listBinding.create({
-      symbol: data?.getProperty("/symbol") as string,
-      whereFound: data?.getProperty("/whereFound") as string,
-      language: data?.getProperty("/language") as string,
+      symbol: data?.getProperty("/symbol"),
+      whereFound: data?.getProperty("/whereFound"),
+      language: data?.getProperty("/language"),
     });
 
     this.creationDialog.close();
     (this.table.getBinding("items") as Binding).refresh();
   }
 
-  submitForm() {
+  public submitForm(): void {
     this.save();
   }
-  
-  closeDialog() {
+
+  public closeDialog(): void {
     this.creationDialog.close();
   }
 
-  async translate() {
-    //The code below is standard code for calling an OData Action bound to an entity in a list
+  public async translate(): Promise<void> {
     this.table.getSelectedItems().forEach(async (item: ListItemBase) => {
       const contextBinding = this.getView()
         ?.getModel()
