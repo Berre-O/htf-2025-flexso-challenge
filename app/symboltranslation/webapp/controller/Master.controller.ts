@@ -60,6 +60,10 @@ export default class Master extends Controller {
     (this.table.getBinding("items") as Binding).refresh();
   }
 
+  submitForm() {
+    this.save();
+  }
+  
   closeDialog() {
     this.creationDialog.close();
   }
