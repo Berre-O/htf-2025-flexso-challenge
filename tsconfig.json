@@ -15,6 +15,7 @@
     "strictPropertyInitialization": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "types": ["@cap-js/cds-types"],
     "paths": {
       "#cds-models/*": ["./@cds-models/*/index.ts"]
     }
